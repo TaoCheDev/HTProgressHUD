@@ -239,7 +239,11 @@
         self.textLabel.textAlignment = NSTextAlignmentCenter;
         self.textLabel.font = [UIFont boldSystemFontOfSize:14.0f];
         self.textLabel.numberOfLines = 1;
-        [self.hudView addSubview:self.textLabel];
+        if ([self.hudView isKindOfClass:[UIVisualEffectView class]]) {
+            [((UIVisualEffectView *)self.hudView).contentView addSubview:self.textLabel];
+        } else {
+            [self.hudView addSubview:self.textLabel];
+        }
         
         // Appearance Options
         self.indicatorView = [HTProgressHUDIndicatorView indicatorViewWithType:HTProgressHUDIndicatorTypeActivityIndicator];
@@ -513,7 +517,11 @@
 {
     [_indicatorView removeFromSuperview];
     _indicatorView = indicatorView;
-    [self.hudView addSubview:indicatorView];
+    if ([self.hudView isKindOfClass:[UIVisualEffectView class]]) {
+        [((UIVisualEffectView *)self.hudView).contentView addSubview:indicatorView];
+    } else {
+        [self.hudView addSubview:indicatorView];
+    }
     [self updateViews];
 }
 
